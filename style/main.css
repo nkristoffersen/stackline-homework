@@ -1,0 +1,144 @@
+/* General Styles */
+body, html {
+    background-color: #f6f8fa;
+}
+.header {
+    padding: 2rem;
+    background-color: #ffffff;
+    margin-bottom: 6rem;
+}
+.header img {
+    width: 12rem;
+}
+
+/* Overview Styles */
+.overview {
+    background-color: #ffffff;
+    overflow: auto;
+}
+
+.overview img {
+    width: 100%;
+    padding: 1.5rem;
+}
+
+.title, .sub-title {
+    text-align: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.sub-title {
+    font-size: 1.2rem;
+    color: rgb(150, 150, 150);
+    margin-bottom: 1rem;
+}
+
+.tags {
+    border-top: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid rgb(230, 230, 230);
+    list-style: none;
+    padding: 1rem;
+}
+
+.tags li {
+    color: rgb(100, 100, 100);
+    display: inline-block;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: .1rem solid rgb(230, 230, 230);
+    border-radius: .3rem;
+    margin-right: .7rem;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+}
+
+.tags li:hover {
+    color: black;
+    background-color: rgb(230, 230, 230);
+    cursor: pointer;
+}
+
+.tabs {
+    list-style: none;
+    padding: 1rem;
+    font-weight: bold;
+    color: rgb(150, 150, 150);
+}
+
+.tabs li {
+    margin-bottom: 3rem;
+}
+
+.tabs i {
+    margin-right: 1rem;
+    font-size: 2rem;
+}
+
+.tabs i.selected {
+    color: #40aafb;
+}
+
+.tabs span.selected {
+    color: black;
+}
+
+
+/* Table styles */
+
+table {
+    background-color: white;
+    width: 100%;
+    text-align: right;
+}
+
+tr {
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+tr:first-child {
+    border-top: 0px;
+}
+
+th {
+    text-align: right;
+    padding: 2rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+td {
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: rgb(150, 150, 150);
+}
+
+tr td:first-child {
+    text-align: left;
+    padding-right: 0rem;
+    padding-left: 2rem;
+}
+
+/* Chart Styles */
+.chart-container {
+    background-color: white;
+    margin-bottom: 6rem;
+}
+
+.chart-title {
+    padding: 2rem;
+}
+
+svg {
+    padding: 2rem;
+}

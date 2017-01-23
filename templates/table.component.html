@@ -1,0 +1,30 @@
+<table>
+    <tr>
+        <th>
+            WEEK ENDING
+        </th>
+        <th>
+            RETAIL SALES
+        </th>
+        <th>
+            WHOLESALE SALES
+        </th>
+        <th>
+            UNITS SOLD
+        </th>
+    </tr>
+    <tr ng-repeat="week in vm.product.sales">
+        <td>
+            {{week.weekEnding | date: 'MM/dd/yy'}}
+        </td>
+        <td>
+            {{week.retailSales | currency:"$":0}}
+        </td>
+        <td>
+            {{week.wholesaleSales | currency:"$":0}}
+        </td>
+        <td>
+            {{week.unitsSold}}
+        </td>
+    </tr>
+</table>

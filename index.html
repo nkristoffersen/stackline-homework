@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Stackline</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- components -->
+        <script src="components/overview.component.js"></script>
+        <script src="components/table.component.js"></script>
+        <script src="components/chart.component.js"></script>
+
+        <!-- Factories -->
+        <script src="factories/d3.factory.js"></script>
+
+        <!-- Favicon -->
+        <link href="https://daks2k3a4ib2z.cloudfront.net/55f9823a602f446d39c64caa/5619b1a5b5efed9f010e4e21_blue-stackline-favicon.png" rel="shortcut icon" type="image/x-icon">
+
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Font Awesome -->
+        <script src="https://use.fontawesome.com/6de99085ef.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="style/main.css" />
+    </head>
+    <body>
+        <div class="header">
+            <img src="https://atlas.stackline.com/images/stackline-logo.svg">
+        </div>
+        <div ng-controller="MainCtrl as ctrl">
+            <overview-component product="product" class="col-sm-3"></overview-component>
+            <div class="col-sm-9">
+                <chart-component product="product"></chart-component>
+                <table-component product="product"></table-component>
+            </div>
+        </div>
+    </body>
+</html>
