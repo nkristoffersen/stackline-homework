@@ -18,31 +18,65 @@ angular.module('app')
               d3Factory.d3().then(function(d3) {
 
                 var data = [];
+                var date = new Date();
                 for (var i = 0; i < product.sales.length; i++) {
-                    data.push({
-                        "sale": product.sales[i]["retailSales"],
-                        "week": product.sales[i].weekEnding
-                    });
+                  var weekDate = new Date(product.sales[i].weekEnding);
+                    if (weekDate.getYear() == date.getYear() - 1){
+                          data.push({
+                              "sale": product.sales[i]["retailSales"],
+                              "week": product.sales[i].weekEnding
+                          });
+                        }
                 }
 
-                var color   = d3.scale.category10(),
-                    width   = 100,
-                    height  = 100,
-                    min     = Math.min(width, height),
-                    svg     = d3.select('.chart-container').append('svg'),
-                    xScale  = d3.time.scale().domain();
+                var svg = d3.select(".chart-container").append("svg");
+                var margin = {top: 20, right: 20, bottom: 30, left: 50};
+                var width = 600;
+                var height = 600;
 
-                svg.attr({width: '100%', height: '100%'})
-                    .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
-                    .attr('preserveAspectRatio','xMinYMin');
+                svg.attr("width", "100%");
+                svg.attr("height", 1000);
 
-                var g = svg.append('g')
-                    .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
+                var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                g.selectAll('path').data(data)
-                  .enter().append('path')
-                    .style('stroke', 'white')
-                    .attr('fill', function(d, i) { return color(i); });
+
+                var x = d3.scaleTime()
+                    .rangeRound([0, width]);
+
+                var y = d3.scaleLinear()
+                    .rangeRound([height, 0]);
+
+                var line = d3.line()
+                    .x(function(d) { return x(d.week); })
+                    .y(function(d) { return y(d.sale); });
+
+                x.domain(d3.extent(data, function(d) { return new Date(d.week); }));
+                y.domain(d3.extent(data, function(d) { return d.sale; }));
+
+                g.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x))
+                  .select(".domain")
+                    .remove();
+
+                g.append("g")
+                    .call(d3.axisLeft(y))
+                  .append("text")
+                    .attr("fill", "#000")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", "0.71em")
+                    .attr("text-anchor", "end")
+                    .text("Price ($)");
+
+                g.append("path")
+                    .datum(data)
+                    .attr("fill", "none")
+                    .attr("stroke", "steelblue")
+                    .attr("stroke-linejoin", "round")
+                    .attr("stroke-linecap", "round")
+                    .attr("stroke-width", 1.5)
+                    .attr("d", line);
 
               });
             }
