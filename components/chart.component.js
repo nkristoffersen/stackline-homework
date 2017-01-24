@@ -18,10 +18,10 @@ angular.module('app')
               d3Factory.d3().then(function(d3) {
 
                 var data = [];
-                var date = new Date();
+                var curDate = new Date();
                 for (var i = 0; i < product.sales.length; i++) {
                   var weekDate = new Date(product.sales[i].weekEnding);
-                    if (weekDate.getYear() == date.getYear() - 1){
+                    if (weekDate.getYear() == curDate.getYear() - 1){
                           data.push({
                               "sale": product.sales[i]["retailSales"],
                               "week": product.sales[i].weekEnding
@@ -29,13 +29,16 @@ angular.module('app')
                         }
                 }
 
-                var svg = d3.select(".chart-container").append("svg");
-                var margin = {top: 20, right: 20, bottom: 30, left: 50};
-                var width = 600;
-                var height = 600;
+                console.log(data);
 
+                var svg = d3.select(".chart-container").append("svg");
+                var margin = {top: 20, right: 0, bottom: 30, left: 0};
+                var height = 400;
                 svg.attr("width", "100%");
-                svg.attr("height", 1000);
+                svg.attr("height", height + margin.top + margin.bottom + 30);
+
+                var width = svg.node().getBoundingClientRect().width - 40;
+
 
                 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -46,37 +49,59 @@ angular.module('app')
                 var y = d3.scaleLinear()
                     .rangeRound([height, 0]);
 
-                var line = d3.line()
+                var lineCur = d3.line()
                     .x(function(d) { return x(d.week); })
-                    .y(function(d) { return y(d.sale); });
+                    .y(function(d) { return y(d.sale); })
+                    .curve(d3.curveCardinal);
 
-                x.domain(d3.extent(data, function(d) { return new Date(d.week); }));
-                y.domain(d3.extent(data, function(d) { return d.sale; }));
+                var linePast = d3.line()
+                    .x(function(d) { return x(d.week); })
+                    .y(function(d) { return y(d.sale - (Math.random() * 100000)); })
+                    .curve(d3.curveCardinal);
+
+                /*
+                If you want to show the whole year, though I prefer the small dataset like I have
+                it.
+                */
+                //var startX = new Date(curDate.getFullYear() - 1 + "-01-01");
+                //var endX = new Date(curDate.getFullYear() - 1 + "-12-31");
+                //x.domain([startX, endX]);
+
+                x.domain(d3.extent(data, function(d) {return new Date(d.week); }));
+                y.domain([0, d3.extent(data, function(d) { return d.sale; })[1]]);
 
                 g.append("g")
                     .attr("transform", "translate(0," + height + ")")
                     .call(d3.axisBottom(x))
-                  .select(".domain")
+                    .attr("class", "xAxis")
+                    .select(".domain")
                     .remove();
+
+                g.select(".xAxis")
+                    .selectAll("text")
+                    .style("font-size", "1.3rem");
 
                 g.append("g")
                     .call(d3.axisLeft(y))
-                  .append("text")
-                    .attr("fill", "#000")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", "0.71em")
-                    .attr("text-anchor", "end")
-                    .text("Price ($)");
+                    .attr("class", "yAxis");
 
                 g.append("path")
                     .datum(data)
                     .attr("fill", "none")
-                    .attr("stroke", "steelblue")
+                    .attr("stroke", "rgb(65, 166, 246)")
                     .attr("stroke-linejoin", "round")
                     .attr("stroke-linecap", "round")
-                    .attr("stroke-width", 1.5)
-                    .attr("d", line);
+                    .attr("stroke-width", 3)
+                    .attr("d", lineCur);
+
+                g.append("path")
+                    .datum(data)
+                    .attr("fill", "none")
+                    .attr("stroke", "rgb(160, 160, 160)")
+                    .attr("stroke-linejoin", "round")
+                    .attr("stroke-linecap", "round")
+                    .attr("stroke-width", 3)
+                    .attr("d", linePast);
 
               });
             }

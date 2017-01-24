@@ -95,6 +95,7 @@ table {
     background-color: white;
     width: 100%;
     text-align: right;
+    margin-bottom: 6rem;
 }
 
 tr {
@@ -137,8 +138,22 @@ tr td:first-child {
 
 .chart-title {
     padding: 2rem;
+    font-weight: bold;
 }
 
 svg {
     padding: 2rem;
+}
+
+svg .yAxis {
+    display: none;
+}
+
+svg .tick line {
+    opacity: 0;
+}
+
+svg .tick text {
+    font-size: 1rem;
+    fill: rgb(150, 150, 150);
 }
